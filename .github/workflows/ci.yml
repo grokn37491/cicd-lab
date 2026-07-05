@@ -31,19 +31,26 @@ jobs:
           test -f README.md
           echo "README exists ✔"
 
+
   build:
     needs: test
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Build container image
+      - name: Log in to GHCR
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Build image
         run: |
-          echo "Building container image..."
-          docker build -t cicd-lab:latest .
-          docker images
+          docker build -t ghcr.io/${{ github.repository }}/cicd-lab:latest .
 
-
-
+      - name: Push image
+        run: |
+          docker push ghcr.io/${{ github.repository }}/cicd-lab:latest
