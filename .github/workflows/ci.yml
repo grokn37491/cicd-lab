@@ -4,12 +4,23 @@ on:
   push:
 
 jobs:
-  build:
+  inspect:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Show repository files
-        run: ls -R
+      - name: Show environment info
+        run: |
+          echo "Current directory:"
+          pwd
+          echo "Files in repo:"
+          ls -R
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Simulated test step
+        run: |
+          echo "Running tests..."
+          echo "All tests passed (simulated)"
