@@ -20,8 +20,13 @@ jobs:
   test:
     needs: inspect
     runs-on: ubuntu-latest
+
     steps:
-      - name: Simulated test step
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Verify README exists
         run: |
-          echo "Running tests..."
-          echo "All tests passed (simulated)"
+          echo "Checking for README.md..."
+          test -f README.md
+          echo "README exists ✔"
