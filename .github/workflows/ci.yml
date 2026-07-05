@@ -18,6 +18,7 @@ jobs:
           ls -R
 
   test:
+    needs: inspect
     runs-on: ubuntu-latest
     steps:
       - name: Simulated test step
