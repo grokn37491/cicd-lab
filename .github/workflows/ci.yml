@@ -30,3 +30,19 @@ jobs:
           echo "Checking for README.md..."
           test -f README.md
           echo "README exists ✔"
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build container image
+        run: |
+          echo "Building container image..."
+          docker build -t cicd-lab:latest .
+          docker images
+
+
